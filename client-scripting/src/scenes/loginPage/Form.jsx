@@ -95,7 +95,7 @@ const Form = () =>
         });
         const loggedIn = await loggedInResponse.json();
         onSubmitProps.resetForm();
-        if (loggedIn)
+        if (!loggedIn.message)
         {
 
             Swal.fire({
@@ -114,9 +114,6 @@ const Form = () =>
                         })
                     );
 
-                    // localStorage.setItem('is_authenticated', true);
-                    // setIsAuthenticated(true);
-
                     Swal.fire({
                         icon: 'success',
                         title: 'Successfully logged in!',
@@ -124,7 +121,7 @@ const Form = () =>
                         timer: 1500,
                     });
 
-                    navigate("/home");
+                    navigate("/");
                 },
             });
         } else

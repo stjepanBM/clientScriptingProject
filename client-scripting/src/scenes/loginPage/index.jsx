@@ -1,4 +1,5 @@
 import { Typography, useMediaQuery, useTheme, Box } from '@mui/material';
+import Navbar from 'components/NavBar';
 import Form from './Form';
 
 
@@ -10,7 +11,8 @@ const LoginPage = () =>
     return (
         <Box>
 
-            <Box
+            <Navbar />
+            {/* <Box
                 width="100%"
                 backgroundColor={theme.palette.background.alt}
                 p="1rem 6%"
@@ -19,7 +21,7 @@ const LoginPage = () =>
                 <Typography fontWeight="bold" fontSize="32px" color="primary">
                     AdventureExmp
                 </Typography>
-            </Box>
+            </Box> */}
 
             <Box
                 width={isNonMobileScreens ? "50%" : "93%"}

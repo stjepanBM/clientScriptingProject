@@ -1,8 +1,11 @@
-import Form from "scenes/loginPage/Form";
+import Navbar from "components/NavBar";
+
+
 const HomePage = () =>
 {
     return (
-        <div>HELLO JESSSS
+        <div>
+            <Navbar />
 
         </div>
     )
