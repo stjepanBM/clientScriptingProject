@@ -169,10 +169,9 @@ const Form = () =>
                 handleBlur,
                 handleChange,
                 handleSubmit,
-                setFieldValue,
                 resetForm,
             }) =>
-            {
+            (
                 <form onSubmit={handleSubmit}>
                     <Box
                         display="grid"
@@ -205,12 +204,10 @@ const Form = () =>
                             sx={{ gridColumn: "span 4" }}
                         />
 
-
-
                         {isRegister && (
                             <>
                                 <TextField
-                                    label="name"
+                                    label="Name"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     value={values.name}
@@ -259,7 +256,7 @@ const Form = () =>
                         </Typography>
                     </Box>
                 </form>
-            }}
+             )}
         </Formik>
     );
 };

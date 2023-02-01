@@ -1,7 +1,10 @@
+import Form from "scenes/loginPage/Form";
 const HomePage = () =>
 {
     return (
-        <div>hello</div>
+        <div>HELLO JESSSS
+
+        </div>
     )
 }
 
