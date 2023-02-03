@@ -7,31 +7,31 @@ const TableHeader = (props) => {
 
     const headCells = [
         {
-          id: 'name',
+          id: 'Name',
           numeric: false,
           disablePadding: true,
           label: 'Name',
         },
         {
-          id: 'surname',
+          id: 'Surname',
           numeric: false,
           disablePadding: false,
           label: 'Surname',
         },
         {
-          id: 'email',
+          id: 'Email',
           numeric: false,
           disablePadding: false,
           label: 'Email',
         },
         {
-          id: 'city',
+          id: 'City',
           numeric: false,
           disablePadding: false,
           label: 'City',
         },
         {
-          id: 'state',
+          id: 'State',
           numeric: false,
           disablePadding: false,
           label: 'State',

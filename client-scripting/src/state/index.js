@@ -5,6 +5,7 @@ const initialState = {
     user: null,
     token: null,
     customers: [],
+    bills: [],
 }
 
 export const authSlice = createSlice({
@@ -29,9 +30,18 @@ export const authSlice = createSlice({
         {
             state.customers = action.payload.customers;
         },
+        setBills: (state, action) => {
+            state.bills = action.payload.bills;
+        },
+        setCities: (state, action) => {
+            state.cities = action.payload.cities;
+        },
+        setStates: (state, action) => {
+            state.states = action.payload.states;
+        }
     }
 
 });
 
-export const { setMode, setLogin, setLogout, setCustomers } = authSlice.actions;
+export const { setMode, setLogin, setLogout, setCustomers, setBills, setCities, setStates } = authSlice.actions;
 export default authSlice.reducer;

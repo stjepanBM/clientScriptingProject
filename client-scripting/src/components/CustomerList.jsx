@@ -7,13 +7,19 @@ import {
   TableBody, TableCell,
   TableContainer, TableRow,
   Typography, 
-  TablePagination
+  TablePagination,
+  Button,
+  FormControlLabel,
+  Switch
 } from "@mui/material";
 import TableHeader from "./TableHeader";
 import TableToolbar from "./TableToolbar";
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from "react-redux";
-import { setCustomers } from "state";
+import { setCities, setCustomers, setStates } from "state";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "@emotion/react";
+import Swal from "sweetalert2";
 
 const CustomerList = () => {
 
@@ -31,13 +37,20 @@ const CustomerList = () => {
     };
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('Name');
     const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
-    const [dense, setDense] = useState(false);
     const [rowsPerPage, setRowsPerPage] = useState(5); 
     const customers = useSelector((state) => state.customers);
+    const token = useSelector((state) => state.token);
+    const cities = useSelector((state) => state.cities);
+    const states = useSelector((state) => state.states);
+    const theme = useTheme();
+    const alt = theme.palette.background.alt;
+    const main = theme.palette.primary.main;
+
 
     const getCustomers = async () => {
       const getCustomersResponse = await fetch(
@@ -45,11 +58,31 @@ const CustomerList = () => {
       );
       const customers = await getCustomersResponse.json();
       dispatch(setCustomers({customers: customers}));
-      console.log(customers);
+      // console.log(customers);
     };
+
+
+    const getCities = async () => {
+      const getCities = await fetch(
+        "http://www.fulek.com/nks/api/aw/cities"
+      );
+      const data = await getCities.json();
+      dispatch(setCities({cities: data}));
+    }
+
+    const getStates = async () => {
+      const getStates = await fetch(
+        "http://www.fulek.com/nks/api/aw/states"
+      );
+      const data = await getStates.json();
+      dispatch(setStates({states: data}));
+    }
 
     useEffect(() => {
       getCustomers();
+      getCities();
+      getStates();
+
     }, []);
 
     const handleClick = (event, name) => {
@@ -125,7 +158,6 @@ const CustomerList = () => {
       setPage(0);
     }
 
-
     const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - customers.length) : 0;
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
@@ -139,7 +171,7 @@ const CustomerList = () => {
           <Table
             sx={{ minWidth: 750, justifyContent: "center" }}
             aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
+            size={'medium'}
           >
             <TableHeader
               numSelected={selected.length}
@@ -156,10 +188,12 @@ const CustomerList = () => {
                   const isItemSelected = isSelected(row.Id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
+                  const city = cities.find((item) => row.CityId === item.Id );
+                  const state = states.find((item) => city.StateId === item.Id );
+                  
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.Name)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -169,6 +203,7 @@ const CustomerList = () => {
                       <TableCell padding="checkbox">
                         <Checkbox
                           color="primary"
+                          onClick={(event) => handleClick(event, row.Id)}
                           checked={isItemSelected}
                           inputProps={{
                             'aria-labelledby': labelId,
@@ -185,16 +220,52 @@ const CustomerList = () => {
                       </TableCell>
                       <TableCell align="left">{row.Surname}</TableCell>
                       <TableCell align="left">{row.Email}</TableCell>
-                      <TableCell align="right">{row.City}</TableCell>
-                      <TableCell align="right">{row.State}</TableCell>
-                      <TableCell align="left">actions</TableCell>
+                      <TableCell align="left">
+                        {city.Name}
+                      </TableCell>
+                      <TableCell align="left">{state.Name}</TableCell>
+                      <TableCell align="left">
+                          <Button onClick={() => navigate()}
+                            sx={{
+                              m: "0 0.5rem",
+                              p: "0.3rem",
+                              backgroundColor: main,
+                              color: alt,
+                              "&:hover": { color: main },
+                            }}
+                          >
+                              Edit
+                          </Button>
+                          <Button onClick={() => {
+
+                            if(token) {
+                              navigate(`/${row.Id}/bills`)
+                            } else {
+                              Swal.fire({
+                                icon: 'warning',
+                                title: 'You are not logged in!',
+                                showCloseButton: true,
+                                focusConfirm: true,
+                            });
+                            }
+                          }
+                          }
+                            sx={{
+                              p: "0.3rem",
+                              backgroundColor: main,
+                              color: alt,
+                              "&:hover": { color: main },
+                            }}>
+                              View
+                          </Button>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
-                    height: (dense ? 33 : 53) * emptyRows,
+                    height: (53) * emptyRows,
                   }}
                 >
                   <TableCell colSpan={7} />
@@ -205,7 +276,7 @@ const CustomerList = () => {
         </TableContainer>
 
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[5, 10, 25, 50]}
           component="div"
           count={customers.length}
           rowsPerPage={rowsPerPage}
@@ -213,7 +284,6 @@ const CustomerList = () => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-
         </Paper>
       </Box>
       </>

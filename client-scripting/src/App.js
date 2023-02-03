@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import LoginPage from "scenes/loginPage";
 import HomePage from "scenes/homePage";
 import AddPage from "scenes/addPage";
+import Bills from "scenes/billsPage";
 import { useSelector } from "react-redux";
 import { useMemo } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -24,6 +25,8 @@ function App()
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/add" element={<AddPage />} />
+            <Route path="/:customerId/bills" element={ isAuth ? <Bills /> : <HomePage />} />
+
 
           </Routes>
         </ThemeProvider>

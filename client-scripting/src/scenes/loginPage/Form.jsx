@@ -72,7 +72,7 @@ const Form = () =>
         if (savedUser)
         {
             Swal.fire({
-                icon: 'success',
+                icon: 'info',
                 title: 'You successfully registered!',
                 showConfirmButton: false,
                 timer: 1500,
