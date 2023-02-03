@@ -16,14 +16,11 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "state";
 import Swal from "sweetalert2";
-// import Dropzone from "react-dropzone";
-// import FlexBetween from "components/FlexBetween";
 
 const registerSchema = yup.object().shape({
     username: yup.string().required("required"),
     password: yup.string().required("required"),
     name: yup.string().required("required"),
-    // img: yup.string().notRequired("required")
 });
 
 const loginSchema = yup.object().shape({

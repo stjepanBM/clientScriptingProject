@@ -12,17 +12,6 @@ const LoginPage = () =>
         <Box>
 
             <Navbar />
-            {/* <Box
-                width="100%"
-                backgroundColor={theme.palette.background.alt}
-                p="1rem 6%"
-                textAlign="center"
-            >
-                <Typography fontWeight="bold" fontSize="32px" color="primary">
-                    AdventureExmp
-                </Typography>
-            </Box> */}
-
             <Box
                 width={isNonMobileScreens ? "50%" : "93%"}
                 p="2rem"

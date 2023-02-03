@@ -1,13 +1,15 @@
 import Navbar from "components/NavBar";
+import CustomerList from "components/CustomerList";
 
 
 const HomePage = () =>
 {
-    return (
-        <div>
-            <Navbar />
 
-        </div>
+    return (
+        <>
+            <Navbar />
+            <CustomerList  />
+        </>
     )
 }
 
