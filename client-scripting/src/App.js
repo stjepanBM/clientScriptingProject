@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "scenes/loginPage";
 import HomePage from "scenes/homePage";
 import AddPage from "scenes/addPage";
@@ -8,6 +8,7 @@ import { useMemo } from "react";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "theme";
+import UpdateCustomer from "scenes/editCustomerPage";
 
 function App()
 {
@@ -26,8 +27,8 @@ function App()
             <Route path="/login" element={<LoginPage />} />
             <Route path="/add" element={<AddPage />} />
             <Route path="/:customerId/bills" element={ isAuth ? <Bills /> : <HomePage />} />
-
-
+            <Route path="/edit/:customerId" element={ isAuth ? <UpdateCustomer /> : <HomePage />} />
+            
           </Routes>
         </ThemeProvider>
       </BrowserRouter>

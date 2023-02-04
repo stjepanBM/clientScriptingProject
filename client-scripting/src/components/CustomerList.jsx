@@ -164,7 +164,7 @@ const CustomerList = () => {
 
     return (
       <>
-        <Box sx={{width:'60%'}}>
+        <Box m="2rem auto" sx={{width:'85%'}}>
           <Paper sx={{width:'100%', mb:2}}>
           <TableToolbar numSelected={selected.length} />
           <TableContainer sx={{justifyContent: "center"}}>
@@ -225,7 +225,20 @@ const CustomerList = () => {
                       </TableCell>
                       <TableCell align="left">{state.Name}</TableCell>
                       <TableCell align="left">
-                          <Button onClick={() => navigate()}
+                          <Button onClick={() => {
+
+                              if(token) {
+                                navigate(`/edit/${row.Id}`);
+                              } else {
+                                Swal.fire({
+                                  icon: 'warning',
+                                  title: 'You are not logged in!',
+                                  showCloseButton: true,
+                                  focusConfirm: true,
+                              });
+                              }
+                            }
+                          }
                             sx={{
                               m: "0 0.5rem",
                               p: "0.3rem",
@@ -239,7 +252,7 @@ const CustomerList = () => {
                           <Button onClick={() => {
 
                             if(token) {
-                              navigate(`/${row.Id}/bills`)
+                              navigate(`/${row.Id}/bills`);
                             } else {
                               Swal.fire({
                                 icon: 'warning',
