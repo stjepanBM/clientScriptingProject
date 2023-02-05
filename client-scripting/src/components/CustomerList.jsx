@@ -270,7 +270,7 @@ const CustomerList = () => {
                               color: alt,
                               "&:hover": { color: main },
                             }}>
-                              View
+                              Bills
                           </Button>
                       </TableCell>
                     </TableRow>
