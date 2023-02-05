@@ -25,6 +25,12 @@ const TableHeader = (props) => {
           label: 'Email',
         },
         {
+          id: 'Telephone',
+          numeric: false,
+          disablePadding:false,
+          label: "Telephone"
+        },
+        {
           id: 'City',
           numeric: false,
           disablePadding: false,

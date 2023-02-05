@@ -220,6 +220,7 @@ const CustomerList = () => {
                       </TableCell>
                       <TableCell align="left">{row.Surname}</TableCell>
                       <TableCell align="left">{row.Email}</TableCell>
+                      <TableCell align="left">{row.Telephone}</TableCell>
                       <TableCell align="left">
                         {city.Name}
                       </TableCell>

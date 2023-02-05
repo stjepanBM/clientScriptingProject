@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Navbar from "components/NavBar";
 import { useParams } from "react-router-dom";
 import { Box, useMediaQuery } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import Form from "./Form";
+import Form from "./Form"
 
 const UpdateCustomer = () => {
 
@@ -13,7 +13,6 @@ const UpdateCustomer = () => {
     const isNonMobileScreens = useMediaQuery("(min-width: 1000px)");
     
     const getCustomerById = async () => {
-
         const getCustomerById = await fetch(
             `http://www.fulek.com/nks/api/aw/customer/${customerId}`
         );
@@ -28,7 +27,6 @@ const UpdateCustomer = () => {
     return (
         <>
             <Navbar />
-           
             <Box
                 width={isNonMobileScreens ? "50%" : "93%"}
                 p="2rem"
@@ -36,7 +34,9 @@ const UpdateCustomer = () => {
                 borderRadius="1.5rem"
                 backgroundColor={theme.palette.background.alt}
             >
-                <Form customer = {customer} />
+
+            <Form customer={customer} />
+
             </Box>
         </>
     )
