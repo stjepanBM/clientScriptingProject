@@ -63,7 +63,7 @@ const Form = ({customer}) =>
         });
         // JSON.stringify(values)
         const editResponse = await editCustomerResp.json();
-        // onSubmitProps.resetForm();
+        
         if (!editResponse.Message)
         {
 

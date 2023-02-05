@@ -118,7 +118,7 @@ const Navbar = () => {
                                         color: alt,
                                         "&:hover": { color: main },
                                     }}
-                                    onClick={() => {navigate("/profile/:id")}}
+                                    onClick={() => {navigate("/profile")}}
                                     >
                                         {fullName}
                                 </Button>

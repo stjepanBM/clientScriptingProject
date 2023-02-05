@@ -54,7 +54,7 @@ const CustomerList = () => {
 
     const getCustomers = async () => {
       const getCustomersResponse = await fetch(
-          "http://www.fulek.com/nks/api/aw/customers"
+          "http://www.fulek.com/nks/api/aw/last200customers"
       );
       const customers = await getCustomersResponse.json();
       dispatch(setCustomers({customers: customers}));

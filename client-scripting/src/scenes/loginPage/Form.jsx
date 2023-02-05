@@ -32,7 +32,6 @@ const initialValuesRegister = {
     username: "",
     password: "",
     name: "",
-    // img: ""
 };
 
 const initialValuesLogin = {
@@ -63,12 +62,19 @@ const Form = () =>
             "http://www.fulek.com/nks/api/aw/registeruser",
             {
                 method: "POST",
-                body: formData,
+                headers: {
+                    "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: values.username,
+                    password: values.password,
+                    name: values.name,
+                    img: ""
+                }),
             }
         );
         const savedUser = await savedUserResponse.json();
         onSubmitProps.resetForm();
-
+        console.log(savedUser);
         if (savedUser)
         {
             Swal.fire({
@@ -88,11 +94,14 @@ const Form = () =>
         const loggedInResponse = await fetch("http://www.fulek.com/nks/api/aw/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(values),
+            body: JSON.stringify({
+                username: values.username,
+                password: values.password    
+            }),
         });
         const loggedIn = await loggedInResponse.json();
         onSubmitProps.resetForm();
-        if (!loggedIn.message)
+        if (!loggedIn.Message)
         {
 
             Swal.fire({
