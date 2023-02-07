@@ -16,7 +16,7 @@ import TableHeader from "./TableHeader";
 import TableToolbar from "./TableToolbar";
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from "react-redux";
-import { setCities, setCustomers, setStates } from "state";
+import { clearSelected, setCities, setCustomers, setSelectedCust, setStates } from "state";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@emotion/react";
 import Swal from "sweetalert2";
@@ -41,6 +41,7 @@ const CustomerList = () => {
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('Name');
     const [selected, setSelected] = useState([]);
+    const selectedCust = useSelector((state) => state.selected);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5); 
     const customers = useSelector((state) => state.customers);
@@ -60,7 +61,6 @@ const CustomerList = () => {
       dispatch(setCustomers({customers: customers}));
       // console.log(customers);
     };
-
 
     const getCities = async () => {
       const getCities = await fetch(
@@ -103,6 +103,7 @@ const CustomerList = () => {
       }
   
       setSelected(newSelected);
+      dispatch(setSelectedCust({selected: newSelected}));
     };
 
     const handleRequestSort = (event, property) => {
@@ -112,13 +113,19 @@ const CustomerList = () => {
     }
 
     const handleSelectAllClick = (event) => {
-      if (event.target.checked) {
-        const newSelected = customers.map((n) => n.Id);
-        console.log(newSelected);
-        setSelected(newSelected);
+      if(selected.length < customers.length && selected.length > 0) {
+        setSelected([]);
+        dispatch(clearSelected());
         return;
       }
+      if (event.target.checked) {
+        const newSelected = customers.map((n) => n.Id);
+        setSelected(newSelected);
+        dispatch(setSelectedCust({selected: newSelected}));
+        return;
+      } 
       setSelected([]);
+      dispatch(clearSelected());
     }
 
     const descendingComparator = (a, b, orderBy) => {

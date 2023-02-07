@@ -10,6 +10,7 @@ import { createTheme } from "@mui/material/styles";
 import { themeSettings } from "theme";
 import UpdateCustomer from "scenes/editCustomerPage";
 import ProfilePage from "scenes/profilePage";
+import BillItems from "scenes/billItems";
 
 function App()
 {
@@ -28,6 +29,7 @@ function App()
             <Route path="/login" element={<LoginPage />} />
             <Route path="/add" element={<AddPage />} />
             <Route path="/:customerId/bills" element={ isAuth ? <Bills /> : <HomePage />} />
+            <Route path="/:customerId/bills/:billId/items" element={ isAuth ? <BillItems /> : <HomePage />} />
             <Route path="/edit/:customerId" element={ isAuth ? <UpdateCustomer /> : <HomePage />} />
             <Route path="/profile" element={ isAuth ? <ProfilePage /> : <HomePage />} />
             

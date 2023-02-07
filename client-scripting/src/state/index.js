@@ -6,6 +6,8 @@ const initialState = {
     token: null,
     customers: [],
     bills: [],
+    billItems: [],
+    selected: [],
 }
 
 export const authSlice = createSlice({
@@ -42,10 +44,22 @@ export const authSlice = createSlice({
         },
         setStates: (state, action) => {
             state.states = action.payload.states;
-        }
+        },
+        setSelectedCust: (state, action) => {
+            state.selected = action.payload.selected;
+        },
+        clearSelected: (state) => {
+            state.selected = [];
+        },
+        setBillItems: (state, action) => {
+            state.billItems = action.payload.billItems;
+        },
+
     }
 
 });
 
-export const { setMode, setLogin, setLogout, setCustomers, setBills, setCities, setStates, setUser } = authSlice.actions;
+export const { setMode, setLogin, setLogout,
+     setCustomers, setBills, setCities, setStates,
+    setUser, setSelectedCust, clearSelected, setBillItems } = authSlice.actions;
 export default authSlice.reducer;

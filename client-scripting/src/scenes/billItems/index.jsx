@@ -1,29 +1,29 @@
-import BillRow from "components/BillsRow";
+import ItemRow from "components/ItemRow";
 import Navbar from "components/NavBar";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { setBills } from "state";
+import { setBillItems } from "state";
 
-const Bills = () => {
+const BillItems = () => {
 
+    const { billId } = useParams();
     const dispatch = useDispatch();
-    const { customerId } = useParams();
-    const bills = useSelector((state) => state.bills);
+    const billItems = useSelector((state) => state.billItems);
 
-    const getBillsForCustomer = async () => {
+    const getBillItems = async () => {
         const getBillsForCustomer = await fetch(
-            `http://www.fulek.com/nks/api/aw/customerbills/${customerId}`
+            `http://www.fulek.com/nks/api/aw/billitems/${billId}`
         );
         const data = await getBillsForCustomer.json();
-        dispatch(setBills({bills: data}));
+        dispatch(setBillItems({billItems: data}));
     }
 
     useEffect(() => {
-        getBillsForCustomer();
-    }, [])
+        getBillItems();
+    }, []);
 
-    return (
+    return(
         <>
             <Navbar />
             <div className="vertical-center margin-top">
@@ -38,19 +38,20 @@ const Bills = () => {
                     }}>
                     <thead>
                         <tr>
-                            <th>BillNumber</th>
-                            <th>Customer</th>
-                            <th>CreditCardNumber</th>
-                            <th>Seller</th>
-                            <th>Comment</th>    
-                            <th>Items</th>
+                            <th>ProductName</th>
+                            <th>ProductNumber</th>
+                            <th>Quantity</th>
+                            <th>Color</th>    
+                            <th>Subcategory</th>
+                            <th>PricePerPiece</th>
+                            <th>TotalPrice</th>
                         </tr>
                     </thead>
                     <tbody>
                         
                         {
-                            bills.map((bill) => (
-                                <BillRow key={bill.Id} bill={ bill } />
+                            billItems.map((item) => (
+                                <ItemRow key={item.Id} item={ item } />
                             )
                         )}
                     </tbody>
@@ -58,7 +59,6 @@ const Bills = () => {
             </div>
         </>
     )
+
 }
-
-
-export default Bills;
+export default BillItems;
