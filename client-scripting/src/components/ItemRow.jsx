@@ -20,6 +20,7 @@ class ItemRow extends Component {
                 <td>{props.item.Product.ProductSubcategoryID}</td>
                 <td>{props.item.PricePerPiece}</td>
                 <td>{props.item.TotalPrice}</td>
+                <td><button type="submit" onClick={() => this.props.onDelete(props.item.Id)}>Delete</button></td>
             </tr>
         )
     }
