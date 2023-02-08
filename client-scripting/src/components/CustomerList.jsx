@@ -208,11 +208,11 @@ const CustomerList = () => {
       return 0;
     }
 
-    const getComparator = (order, orderBy) => {
+  const getComparator = (order, orderBy) => {
       return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
-    }
+  }
 
     const stableSort = (array, comparator) => {
       const stabilizedThis = array.map((el, index) => [el, index]);
