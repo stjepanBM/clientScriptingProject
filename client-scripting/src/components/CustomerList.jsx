@@ -106,6 +106,76 @@ const CustomerList = () => {
       dispatch(setSelectedCust({selected: newSelected}));
     };
 
+
+    const handleDelete = async () => 
+    {
+        console.log(selectedCust);
+        let responseOk = true;
+        let errorMessages = [];
+        
+        for(let i = 0; i < selectedCust.length; i++) {
+          const deleteCustomerResp = await fetch(`http://www.fulek.com/nks/api/aw/deletecustomer`, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json" },
+            body: JSON.stringify({
+                Id: selectedCust[i],
+            }),
+          });
+          const deleteResponse = await deleteCustomerResp.json();
+
+          if(deleteResponse.Message) {
+            responseOk = false;
+            errorMessages.push(deleteResponse.Message);
+          }
+        }
+
+        if(!responseOk) {
+          Swal.fire({
+            timer: 1500,
+            showConfirmButton: false,
+            willOpen: () =>
+            {
+                Swal.showLoading();
+            },
+            willClose: () =>
+            {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error!',
+                    text: errorMessages[0],
+                    showConfirmButton: true,
+                });
+            },
+          });
+        } else {
+          Swal.fire({
+            timer: 1500,
+            showConfirmButton: false,
+            willOpen: () =>
+            {
+                Swal.showLoading();
+            },
+            willClose: () =>
+            {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Successfully deleted customers!',
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+
+                navigate("/");
+            },
+          });
+          dispatch(clearSelected());
+          setSelected([]);
+          getCustomers();
+        }
+    };
+
+
     const handleRequestSort = (event, property) => {
       const isAsc = orderBy === property && order === 'asc';
       setOrder(isAsc ? 'desc' : 'asc');
@@ -173,7 +243,7 @@ const CustomerList = () => {
       <>
         <Box m="2rem auto" sx={{width:'85%'}}>
           <Paper sx={{width:'100%', mb:2}}>
-          <TableToolbar numSelected={selected.length} />
+          <TableToolbar numSelected={selected.length} onDelete={handleDelete} />
           <TableContainer sx={{justifyContent: "center"}}>
           <Table
             sx={{ minWidth: 750, justifyContent: "center" }}
